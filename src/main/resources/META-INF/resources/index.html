@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>quarkus-ls - 1.0.0-SNAPSHOT</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+	<style>
+		h1 {
+			padding: 5px;
+		}
+		
+		h1 img {
+			margin-right: 5px;
+		}
+	
+		table {
+			width: 100vw;
+			table-layout: fixed;
+		}
+		
+		table td {
+		}
+		
+		th:nth-child(1) {
+			width: 60px;
+		}
+		th:nth-child(2) {
+			width: 100px;
+		}
+		th:nth-child(3) {
+			width: 100px;
+		}
+		th:nth-child(4) {
+			width: auto;
+		}
+	</style>
+</head>
+<body>
+<h1 class="title"><img src="https://design.jboss.org/quarkus/logo/final/PNG/quarkus_icon_rgb_256px_default.png"/ width="30px">Quarkus Explorer</h1>
+<div id="container">
+
+</div>
+
+
+</body>
+<script>
+	
+	function fetchListing(dir) {
+		return fetch("/api/ls", {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json'
+			},
+			body: dir
+		})
+		.then(response => response.json());
+	}
+	
+	function ls(dir) {
+		fetchListing(dir)
+			.then(listing => render(listing));
+	}	
+	function render(listing) {
+		const container = document.querySelector('#container');
+		container.innerHTML = `
+			<table class="table">
+				<thead>
+					<tr>
+						<th>flags</th>
+						<th>size (kb)</th>
+						<th>last modified</th>
+						<th>name</th>
+					</tr>
+				</thead>
+				<tbody>
+				${listing.map(entry => `
+					<tr>
+						<td>${(entry.isDirectory ? 'd' : '-') + (entry.canRead ? 'r' : '-') + (entry.canWrite ? 'w' : '-') + (entry.canExecute ? 'x' : '-')}</td>
+						<td>${entry.isDirectory ? '' : (entry.size / 1024).toFixed(1)}</td>
+						<td>${new Date(entry.lastModified).toLocaleDateString()}</td>
+						<td>${entry.isDirectory ? `<a href="javascript:ls('${entry.name}')">${entry.name}</a>` : entry.name}</td>
+					</tr>
+				`).join('')}
+				</tbody>
+			</table>
+		`;;
+	}
+	
+	window.addEventListener("unload", onBrowserClosed, false);
+
+	function onBrowserClosed() {
+		navigator.sendBeacon("/api/exit", {});
+	}
+	
+	ls('.');
+</script>
+</html>
