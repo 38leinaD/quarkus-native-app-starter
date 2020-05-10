@@ -19,10 +19,10 @@
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
   </properties>
   <repositories>
-    <repository>
+    <!-- repository>
 	  <id>jitpack.io</id>
       <url>https://jitpack.io</url>
-    </repository>
+    </repository-->
   </repositories>
   <dependencyManagement>
     <dependencies>
@@ -60,11 +60,11 @@
       <scope>test</scope>
     </dependency>    
     <!-- For live-reload of the browser UI during development -->
-    <dependency>
-	    <groupId>de.dplatz</groupId>
+    <!--  dependency>
+	    <groupId>com.github.38leinaD</groupId>
 	    <artifactId>quarkus-livereload-extension</artifactId>
 	    <version>999-SNAPSHOT</version>
-	</dependency>
+	</dependency-->
   </dependencies>
   <build>
     <plugins>

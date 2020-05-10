@@ -1,30 +1,26 @@
-# quarkus-ls project
+# quarkus-native-app-starter
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses Quarkus command-mode to showcase the possibilities of packaging a native executable for an Electron-style Desktop application (frontend is a webapp running in your browser) and building/releasing it via Github Actions.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+For details read the related blog-post on [quarkus.io/blog](https://quarkus.io/blog/).
 
-## Running the application in dev mode
+## Building the application
 
-You can run your application in dev mode that enables live coding using:
+To build build the native executable you need to have GraalVM installed.
+
+For details how to build on your OS, you may also check the build-jobs under [.github/workflows]](../blob/master/.github/workflows). It contains the prerequisits and commands to build for Linux, Mac and Windows.
+
+Build the native executable with
+
 ```
-./mvnw quarkus:dev
+./mvnw package -Dnative
 ```
 
-## Packaging and running the application
+## Running the application
 
-The application can be packaged using `./mvnw package`.
-It produces the `quarkus-ls-1.0.0-SNAPSHOT-runner.jar` file in the `/target` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/lib` directory.
+Run the native executable with webapp. You might have to provide your Chrome executable path as there is a bug in native-mode when using `Desktop.getDesktop().browse(...)`.
 
-The application is now runnable using `java -jar target/quarkus-ls-1.0.0-SNAPSHOT-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: `./mvnw package -Pnative`.
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: `./mvnw package -Pnative -Dquarkus.native.container-build=true`.
-
-You can then execute your native executable with: `./target/quarkus-ls-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
+```
+target/quarkus-ls-1.0.0-SNAPSHOT-runner -Dls.output=web -Dls.chrome.exe=/usr/bin/google-chrome
+```
+The application should start chrome window and display the packaged webapp via opening the [index.html](../blob/master/src/main/resources/META-INF/resources/index.html).

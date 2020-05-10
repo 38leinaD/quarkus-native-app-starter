@@ -32,6 +32,10 @@ public class LsMain implements QuarkusApplication {
     @ConfigProperty(name = "ls.browser.control")
     boolean browserControl;
     
+    // Instead of using Desktop.getDesktop().browse() provide the path to your Chrome executable directly
+    @ConfigProperty(name = "ls.chrome.exe")
+    String chromeExecutable;
+    
     public static void main(String[] args) {
         Quarkus.run(LsMain.class, args);
     }
@@ -42,7 +46,13 @@ public class LsMain implements QuarkusApplication {
             URI webappUri = new URI("http://localhost:" + assignedPort + "/index.html");
             
             if (browserControl) {
-                Desktop.getDesktop().browse(webappUri);
+                if (chromeExecutable != null && !chromeExecutable.equals("native")) {
+                    String cmd = chromeExecutable + " --incognito --app=" + webappUri.toString();
+                    Runtime.getRuntime().exec(cmd).waitFor();
+                }
+                else {
+                    Desktop.getDesktop().browse(webappUri);
+                }
             }
             else {
                 System.out.println("Please open " + webappUri);
