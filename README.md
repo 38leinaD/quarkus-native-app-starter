@@ -23,4 +23,4 @@ Run the native executable with webapp. You might have to provide your Chrome exe
 ```
 target/quarkus-ls-1.0.0-SNAPSHOT-runner -Dls.output=web -Dls.chrome.exe=/usr/bin/google-chrome
 ```
-The application should start chrome window and display the packaged webapp via opening the [index.html](./blob/master/src/main/resources/META-INF/resources/index.html).
+The application should start chrome window and display the packaged webapp via opening the [index.html](./src/main/resources/META-INF/resources/index.html).
