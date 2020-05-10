@@ -8,7 +8,7 @@ For details read the related blog-post on [quarkus.io/blog](https://quarkus.io/b
 
 To build build the native executable you need to have GraalVM installed.
 
-For details how to build on your OS, you may also check the build-jobs under [.github/workflows](./blob/master/.github/workflows). It contains the prerequisits and commands to build for Linux, Mac and Windows.
+For details how to build on your OS, you may also check the build-jobs under [.github/workflows](.github/workflows). It contains the prerequisits and commands to build for Linux, Mac and Windows.
 
 Build the native executable with
 

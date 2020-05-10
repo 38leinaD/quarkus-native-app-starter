@@ -20,7 +20,7 @@ jobs:
     - name: Set version
       run: ./mvnw versions:set -DnewVersion="${{ github.event.release.tag_name }}"
     - name: Build jvm jar
-      run: ./mvnw package"
+      run: ./mvnw package
     - name: Upload jvm
       id: upload-jar
       uses: actions/upload-release-asset@v1
