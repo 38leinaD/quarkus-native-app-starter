@@ -2,7 +2,7 @@
 
 This project uses Quarkus command-mode to showcase the possibilities of packaging a native executable for an Electron-style Desktop application (frontend is a webapp running in your browser) and building/releasing it via Github Actions.
 
-For details read the related blog-post on [quarkus.io/blog](https://quarkus.io/blog/).
+For details read the related blog-post on [quarkus.io/blog](https://quarkus.io/blog/native-command-mode-tools/).
 
 ## Building the application
 
@@ -24,3 +24,5 @@ Run the native executable with webapp. You might have to provide your Chrome exe
 target/quarkus-ls-1.0.0-SNAPSHOT-runner -Dls.output=web -Dls.chrome.exe=/usr/bin/google-chrome
 ```
 The application should start chrome window and display the packaged webapp via opening the [index.html](./src/main/resources/META-INF/resources/index.html).
+
+![quarkus-ls](https://quarkus.io/assets/images/posts/quarkus-native-app/quarkus-native-webui.gif)
